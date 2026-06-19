@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg-main: #f4f6f9;
+    --bg-card: #111726;
+    --bg-card-hover: #161f33;
+    --border-color: rgba(255, 255, 255, 0.06);
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --accent-glow: #3b82f6;
+    --accent-success: #10b981;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
+}
+
+/* Navbar Navigation */
+.navbar {
+    background: rgba(9, 13, 22, 0.8);
+    backdrop-filter: blur(12px);
+    height: 72px;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #fff 0%, #9ca3af 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logout {
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    background: rgba(239, 68, 68, 0.05);
+    transition: all 0.2s ease;
+}
+
+.logout:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* Dashboard Container Layout */
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Hero Section Upgrade */
+.hero {
+    position: relative;
+    background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 45%), 
+                var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 3rem;
+    overflow: hidden;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.hero h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.hero p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+/* Metric Cards Grid */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.stat {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.75rem;
+    position: relative;
+    transition: border-color 0.3s ease;
+}
+
+.stat:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.stat span {
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat h2 {
+    font-size: 32px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: 8px;
+    letter-spacing: -0.5px;
+}
+
+/* Section Title & Bento Elements */
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #07152f;
+    margin-top: 1rem;
+    letter-spacing: -0.3px;
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.card.primary {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%);
+    border-color: rgba(59, 130, 246, 0.3);
+    position: relative;
+}
+
+.card.primary:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.15);
+}
+
+.icon-wrapper {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    color: var(--accent-glow);
+}
+
+.card.primary .icon-wrapper {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: none;
+}
+
+.card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.2px;
+}
+
+.card p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.card.primary p {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Bottom Insights Area */
+.insight {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+.insight h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.mini {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    padding: 1.25rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mini span {
+    color: var(--text-secondary);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mini strong {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.mini:nth-child(2) strong {
+    color: var(--accent-success);
+}
+
+/* Responsive Adaptive Layer */
+@media (max-width: 1024px) {
+    .stats, .actions, .grid {
+        grid-template-columns: 1fr;
+    }
+    .container {
+        padding: 1.5rem 1rem;
+    }
+    .hero {
+        padding: 2rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">ExpenseIQ</div>
+    <a href="/logout" class="logout">Logout</a>
+</nav>
+
+<div class="container">
+
+    <div class="hero">
+        <h1>Welcome Back, {{ username }}</h1>
+
+        <p>Track spending, monitor production trends, and maintain dynamic control over your capital allocations with real-time streaming analytics.</p>
+    </div>
+
+    <div class="stats">
+        <div class="stat">
+            <span>Lifetime Spent</span>
+            <h2>₹{{ lifetime_spent }}</h2>
+        </div>
+
+        <div class="stat">
+            <span>Total Transactions</span>
+            <h2>{{ total_transactions }}</h2>
+        </div>
+
+            <div class="stat">
+                <span>Highest Month</span>
+
+                <h2>₹{{ highest_month_spend }}</h2>
+
+                <p style="margin-top:8px;color:#6b7280;">
+                        {{ highest_month_name }}
+                </p>
+            </div>
+    </div>
+
+    <h2 class="section-title">Quick Actions</h2>
+
+    <div class="actions">
+        <a href="/data_entry" class="card primary">
+            <div class="icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </div>
+            <h3>Add Expense</h3>
+            <p>Instantly log your daily spendings.</p>
+        </a>
+
+        <a href="/current_month" class="card">
+            <div class="icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+            </div>
+            <h3>Current Month</h3>
+            <p>Access high-fidelity variance structures, category splits, and runtime spending burn rates.</p>
+        </a>
+
+        <a href="/spending_history" class="card">
+            <div class="icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <h3>Spending History</h3>
+            <p>Audit historical statements and perform time-series comparisons against historical cycles.</p>
+        </a>
+    </div>
+
+    <div class="insight">
+        <h3>Account Insights</h3>
+        <div class="grid">
+            <div class="mini">
+                <span>Overview</span>
+                <strong>Finance Hub</strong>
+            </div>
+            <div class="mini">
+                <span>Status</span>
+                <strong>Active Tracking</strong>
+            </div>
+            <div class="mini">
+                <span>Analytics Engine</span>
+                <strong>Ready</strong>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+
+
+
+Gemini is AI and can make mistakes.
+

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Finance Platform</title>
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#0b1120;
+    overflow:hidden;
+    color:white;
+    position:relative;
+}
+
+/* Animated Background */
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(120px);
+    opacity:.15;
+}
+
+.orb1{
+    width:500px;
+    height:500px;
+    background:#2563eb;
+    top:-150px;
+    left:-150px;
+    animation:move1 18s ease-in-out infinite;
+}
+
+.orb2{
+    width:450px;
+    height:450px;
+    background:#06b6d4;
+    bottom:-150px;
+    right:-150px;
+    animation:move2 22s ease-in-out infinite;
+}
+
+.orb3{
+    width:350px;
+    height:350px;
+    background:#22c55e;
+    top:50%;
+    left:50%;
+    animation:move3 25s ease-in-out infinite;
+}
+
+.wrapper{
+    width:100%;
+    max-width:1200px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:100px;
+    padding:50px;
+    position:relative;
+    z-index:10;
+}
+
+.left{
+    flex:1;
+    animation:fadeLeft .8s ease;
+}
+
+.badge{
+    display:inline-block;
+    padding:8px 18px;
+    border-radius:50px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.03);
+    color:#94a3b8;
+    font-size:13px;
+    letter-spacing:1px;
+    margin-bottom:30px;
+}
+
+.title{
+    font-size:78px;
+    font-weight:800;
+    line-height:.95;
+    letter-spacing:-3px;
+    color:#ffffff;
+    text-shadow:0 0 30px rgba(255,255,255,.08);
+};
+
+
+.subtitle{
+    margin-top:30px;
+    max-width:550px;
+    color:#94a3b8;
+    font-size:18px;
+    line-height:1.8;
+}
+
+.right{
+    width:420px;
+    animation:fadeRight .8s ease;
+}
+
+.login-card{
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(35px);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:28px;
+    padding:40px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+
+.login-card::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:1px;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.3),
+        transparent
+    );
+}
+
+.login-card h2{
+    font-size:32px;
+    margin-bottom:10px;
+    color:white;
+}
+
+.login-sub{
+    color:#94a3b8;
+    margin-bottom:30px;
+    line-height:1.6;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:8px;
+    color:#e2e8f0;
+    font-size:14px;
+    font-weight:500;
+}
+
+.form-group input{
+    width:100%;
+    padding:15px;
+    border-radius:14px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    background:rgba(255,255,255,.04);
+
+    color:white;
+    font-size:15px;
+
+    transition:all .3s ease;
+}
+
+.form-group input:focus{
+    outline:none;
+
+    border-color:#34d399;
+
+    background:rgba(255,255,255,.06);
+
+    box-shadow:
+        0 0 0 4px rgba(52,211,153,.12),
+        0 0 20px rgba(52,211,153,.15);
+}
+
+.form-group input::placeholder{
+    color:#64748b;
+}
+
+.login-btn{
+    width:100%;
+    border:none;
+
+    padding:15px;
+
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        #34d399,
+        #16a34a
+    );
+
+    color:white;
+
+    font-size:16px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+
+    box-shadow:
+        0 10px 30px rgba(22,163,74,.25);
+}
+
+.logo{
+    margin-bottom:20px;
+}
+
+.login-btn:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 15px 35px rgba(22,163,74,.35);
+}
+
+.signup{
+    text-align:center;
+    margin-top:22px;
+    color:#94a3b8;
+}
+
+.signup a{
+    color:#34d399;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.signup a:hover{
+    color:#6ee7b7;
+}
+
+@keyframes move1{
+    0%,100%{
+        transform:translate(0,0);
+    }
+    50%{
+        transform:translate(120px,80px);
+    }
+}
+
+@keyframes move2{
+    0%,100%{
+        transform:translate(0,0);
+    }
+    50%{
+        transform:translate(-120px,-80px);
+    }
+}
+
+@keyframes move3{
+    0%,100%{
+        transform:translate(-50%,-50%);
+    }
+    50%{
+        transform:translate(-40%,-60%);
+    }
+}
+
+@keyframes fadeLeft{
+    from{
+        opacity:0;
+        transform:translateX(-40px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+@keyframes fadeRight{
+    from{
+        opacity:0;
+        transform:translateX(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+.tagline{
+    color:#10b981;
+    font-size:14px;
+    font-weight:600;
+    margin-top:12px;
+}
+
+@media(max-width:900px){
+
+    body{
+        overflow:auto;
+    }
+
+    .wrapper{
+        flex-direction:column;
+        text-align:center;
+        gap:50px;
+    }
+
+    .title{
+    font-size:78px;
+    font-weight:800;
+    line-height:.95;
+    letter-spacing:-3px;
+    color:#ffffff;
+    text-shadow:0 0 30px rgba(255,255,255,.08);
+}
+
+    .gradient-word{
+        background:linear-gradient(
+            135deg,
+            #ffffff,
+            #dbeafe,
+            #93c5fd
+        );
+        background-clip:text;
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+}
+
+    .right{
+        width:100%;
+        max-width:420px;
+    }
+
+    .subtitle{
+        margin-left:auto;
+        margin-right:auto;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div class="wrapper">
+
+<div class="left">
+
+    <div class="logo">
+        <svg width="60" height="60" viewBox="0 0 60 60">
+            <circle cx="30" cy="30" r="28"
+                    fill="rgba(255,255,255,.04)"
+                    stroke="rgba(255,255,255,.08)"
+                    stroke-width="1"/>
+            <path d="M20 36 L28 26 L34 32 L42 20"
+                  stroke="#34d399"
+                  stroke-width="3"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"/>
+            <circle cx="42" cy="20" r="3" fill="#34d399"/>
+        </svg>
+    </div>
+
+    <div class="badge">
+        PERSONAL FINANCE DASHBOARD
+    </div>
+
+    <h1 class="title">
+        <span class="gradient-word">ExpenseIQ</span><br>
+        <br>
+        
+    </h1>
+
+    <div class="tagline">
+    Track • Analyze • Improve
+                            
+               
+
+
+</div>
+
+    <p class="subtitle">
+    <p class="subtitle">
+        Track expenses, discover spending patterns,
+        and gain actionable financial insights through
+        interactive analytics.
+</p>
+    </p>
+
+</div>
+
+<div class="right">
+
+    <div class="login-card">
+
+        <h2>Welcome Back</h2>
+
+        <p class="login-sub">
+            Sign in to access your personal finance dashboard.
+        </p>
+
+        <form action="/" method="POST">
+
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <button type="submit" class="login-btn">
+                Login
+            </button>
+
+        </form>
+
+        <div class="signup">
+            Don't have an account?
+            <a href="/signup">Create Account</a>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</body>
+</html>

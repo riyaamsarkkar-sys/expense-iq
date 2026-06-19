@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ExpenseIQ</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#f5f7fb;
+    padding:25px;
+}
+
+.page-wrapper{
+    max-width:1280px;
+    margin:auto;
+}
+
+/* Navigation */
+
+.top-nav{
+    display:flex;
+    justify-content:flex-end;
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.nav-btn{
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:10px;
+    color:white;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.dashboard-btn{
+    background:#111827;
+}
+
+.dashboard-btn:hover{
+    background:#374151;
+}
+
+.logout-btn{
+    background:#ef4444;
+}
+
+.logout-btn:hover{
+    background:#dc2626;
+}
+
+/* Main Layout */
+
+.container{
+    width:100%;
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:45px;
+}
+
+/* Sidebar */
+
+.left-panel{
+    background:#111827;
+    color:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+.left-panel h1{
+    font-size:32px;
+    margin-bottom:12px;
+}
+
+.left-panel p{
+    color:#d1d5db;
+    line-height:1.6;
+    margin-bottom:30px;
+}
+
+.stats{
+    margin-top:20px;
+}
+
+.stat-card{
+    background:#1f2937;
+    padding:18px;
+    border-radius:15px;
+    margin-bottom:15px;
+}
+
+.stat-card h3{
+    color:#9ca3af;
+    font-size:14px;
+    margin-bottom:6px;
+}
+
+.stat-card h2{
+    font-size:24px;
+}
+
+/* Form Section */
+
+.right-panel{
+    background:white;
+    border-radius:20px;
+    padding:35px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.right-panel h2{
+    color:#111827;
+    margin-bottom:25px;
+    font-size:28px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    color:#374151;
+    font-weight:600;
+}
+
+.input-box{
+    position:relative;
+}
+
+.input-box i{
+    position:absolute;
+    left:15px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#6b7280;
+}
+
+.input-box input,
+.input-box select{
+    width:100%;
+    padding:14px 14px 14px 45px;
+    border:1px solid #d1d5db;
+    border-radius:12px;
+    font-size:15px;
+    transition:0.3s;
+    background:white;
+}
+
+.input-box input:focus,
+.input-box select:focus{
+    outline:none;
+    border-color:#2563eb;
+    box-shadow:0 0 0 4px rgba(37,99,235,0.15);
+}
+
+.submit-btn{
+    display:block;
+    width:220px;
+    margin-left:auto;
+
+    padding:14px 24px;
+
+    border:none;
+    border-radius:12px;
+
+    background:#2563eb;
+    color:white;
+
+    font-size:16px;
+    font-weight:600;
+
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.submit-btn:hover{
+    background:#1d4ed8;
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+    .container{
+        grid-template-columns:1fr;
+    }
+
+    .left-panel{
+        text-align:center;
+    }
+
+    .top-nav{
+        justify-content:center;
+    }
+}
+
+.history-section{
+    margin-top:50px;
+}
+
+.history-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.history-header h2{
+    font-size:26px;
+    color:#111827;
+}
+
+.history-header span{
+    background:#e5e7eb;
+    padding:8px 14px;
+    border-radius:20px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.table-wrapper{
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.expense-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.expense-table thead{
+    background:#111827;
+}
+
+.expense-table th{
+    color:white;
+    padding:18px;
+    text-align:left;
+    font-size:15px;
+}
+
+.expense-table td{
+    padding:18px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.expense-table tbody tr:hover{
+    background:#f9fafb;
+}
+
+.expense-table tbody tr:last-child td{
+    border-bottom:none;
+}
+
+.amount{
+    font-weight:700;
+    color:#2563eb;
+}
+
+.category-badge{
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.food{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.entertainment{
+    background:#f3e8ff;
+    color:#7e22ce;
+}
+
+.bills{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.travel{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.shopping{
+    background:#fce7f3;
+    color:#be185d;
+}
+
+.education{
+    background:#e0f2fe;
+    color:#0369a1;
+}
+
+.other{
+    background:#e5e7eb;
+    color:#374151;
+}
+.filter-buttons{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.filter-btn{
+    text-decoration:none;
+    background:white;
+    border:1px solid #d1d5db;
+    color:#374151;
+    padding:10px 18px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.filter-btn:hover{
+    background:#2563eb;
+    color:white;
+}
+
+.filter-btn.active{
+    background:#2563eb;
+    border-color:#2563eb;
+    color:white;
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <!-- Top Navigation -->
+
+    <div class="top-nav">
+
+        <a href="/dashboard" class="nav-btn dashboard-btn">
+            <i class="fa-solid fa-house"></i>
+            Dashboard
+        </a>
+
+        <a href="/logout" class="nav-btn logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </a>
+
+    </div>
+
+    <div class="container">
+
+        <!-- Sidebar -->
+
+        <div class="left-panel">
+
+            <h1>
+                <i class="fa-solid fa-wallet"></i>
+                Expense Tracker
+            </h1>
+
+            <p>
+                Manage and monitor your daily expenses with ease.
+                Keep track of spending habits and stay within budget.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <h3>Total Expenses</h3>
+                    <h2>₹{{ total_expense }}</h2>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Total Entries</h3>
+                    <h2>{{ total_entries }}</h2>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Form Section -->
+
+        <div class="right-panel">
+
+            <h2>Add New Expense</h2>
+
+            <form action="/data_entry" method="POST">
+
+                <div class="form-group">
+                    <label>Expense Name</label>
+
+                    <div class="input-box">
+                        <i class="fa-solid fa-pen"></i>
+                        <input
+                            type="text"
+                            name="Title"
+                            placeholder="Enter expense name"
+                            required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Amount</label>
+
+                    <div class="input-box">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                        <input
+                            type="number"
+                            name="Amount"
+                            placeholder="Enter amount"
+                            required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+
+                    <div class="input-box">
+                        <i class="fa-solid fa-note-sticky"></i>
+
+                        <input
+                            type="text"
+                            name="Description"
+                            placeholder="What was this expense for?"
+                            required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+
+                    <div class="input-box">
+                        <i class="fa-solid fa-layer-group"></i>
+
+                        <select name="Category">
+                            <option>Food</option>
+                            <option>Travel</option>
+                            <option>Shopping</option>
+                            <option>Bills</option>
+                            <option>Education</option>
+                            <option>Entertainment</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <button type="submit" class="submit-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Expense
+                </button>
+
+            </form>
+            <hr style="margin:40px 0; border:none; border-top:1px solid #e5e7eb;">
+
+<div class="history-section">
+
+    <div class="history-header">
+
+    <h2>Recent Expenses</h2>
+
+
+</div>
+
+    <div class="table-wrapper">
+
+        <table class="expense-table">
+
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                
+                {% for expense in expenses %}
+                
+                
+
+                <tr>
+
+                    <td>{{ expense.expense_date.strftime('%d %b %Y') }}</td>
+                    <td>{{ expense.Title }}</td>
+
+                <td>
+
+                <span class="category-badge {% if expense.Category == 'Food' %}food
+                {% elif expense.Category == 'Entertainment' %}entertainment
+                {% elif expense.Category == 'Bills' %}bills
+                {% elif expense.Category == 'Travel' %}travel
+                {% elif expense.Category == 'Shopping' %}shopping
+                {% elif expense.Category == 'Education' %}education
+                {% else %}other
+                {% endif %}">
+
+                {{ expense.Category }}
+
+                </span>
+
+                </td>
+
+                    <td class="amount">
+                        ₹{{ expense.Amount }}
+                    </td>
+
+                    <td>{{ expense.Description }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
