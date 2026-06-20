@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request,redirect,session
 from datetime import date, datetime
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import extract,func
+from sqlalchemy import extract,func,create_engine
 from calendar import monthrange
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
@@ -19,6 +19,11 @@ starting.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
 )
 
 print("Base dir:", basedir)
+
+starting.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,
+    'pool_recycle': 300
+}
 
 db = SQLAlchemy(starting)
 
