@@ -13,8 +13,10 @@ starting.secret_key = "mysecretkey123"
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-starting.config['SQLALCHEMY_DATABASE_URI'] = \
+starting.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    'DATABASE_URL',
     'sqlite:///' + os.path.join(basedir, 'practice1.db')
+)
 
 print("Base dir:", basedir)
 
