@@ -345,6 +345,70 @@ label{
 }
 
 
+/* Mobile Responsive */
+
+@media(max-width:768px){
+
+    .top-nav{
+        flex-direction:row;
+        justify-content:center;
+        gap:10px;
+    }
+
+    .nav-btn{
+        flex:1;
+        text-align:center;
+    }
+
+    .left-panel{
+        padding:20px;
+    }
+
+    .left-panel p{
+        display:none;
+    }
+
+    .left-panel h1{
+        font-size:24px;
+        margin-bottom:15px;
+    }
+
+    .stats{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+        margin-top:10px;
+    }
+
+    .stat-card{
+        margin-bottom:0;
+        padding:12px;
+    }
+
+    .stat-card h2{
+        font-size:20px;
+    }
+
+    .right-panel{
+        padding:20px;
+    }
+
+    .submit-btn{
+        width:100%;
+        margin-left:0;
+    }
+
+    .table-wrapper{
+        overflow-x:auto;
+    }
+
+    .expense-table{
+        min-width:700px;
+    }
+
+}
+
+
 
 </style>
 </head>

@@ -289,16 +289,51 @@ body {
 }
 
 /* Responsive Adaptive Layer */
-@media (max-width: 1024px) {
-    .stats, .actions, .grid {
-        grid-template-columns: 1fr;
+
+@media (max-width:1024px) {
+
+    .stats,
+    .actions,
+    .grid {
+        grid-template-columns:1fr;
     }
+
     .container {
-        padding: 1.5rem 1rem;
+        padding:1.5rem 1rem;
     }
+
     .hero {
-        padding: 2rem;
+        padding:2rem;
     }
+
+}
+
+@media (max-width:768px) {
+
+    .container {
+        padding:1rem;
+    }
+
+    .card {
+        padding:1.2rem;
+    }
+
+    .hero h1 {
+        font-size:28px;
+    }
+
+    .hero {
+        padding:1.5rem;
+    }
+
+    .navbar {
+        padding:0 1rem;
+    }
+
+    .stat h2 {
+        font-size:26px;
+    }
+
 }
 </style>
 </head>
